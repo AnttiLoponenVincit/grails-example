@@ -28,58 +28,13 @@ class BootStrap {
         win7.save()
         Computer testComputer2 = new Computer(model: lenovo, serial: "1234568", operatingSystem: win7, type: ComputerType.LAPTOP)
         testComputer2.save()
-        User testUser = new User(firstName: "Antti", lastName: "Loponen", SSN: "123456-789A", department: Department.RESEARCH)
+        User testUser = new User(firstName: "Antti", lastName: "Loponen", ssn: "123456-789A", department: Department.RESEARCH)
         testUser.save()
         testUser.startUsingComputer(testComputer)
-
-        List ibmComputers = Computer.createCriteria().list {
-            model {
-                manufacturer {
-                    eq("name", "IBM")
-                }
-            }
+        for (int it = 0; it < 100; it++) {
+            Computer cloneComputer = new Computer(model: mbp, serial: "000000" + it.toString(), operatingSystem: mavericks, type: ComputerType.LAPTOP)
+            cloneComputer.save()
         }
-        println("IBM: " + ibmComputers)
-
-        List osxComputers = Computer.createCriteria().list {
-            operatingSystem {
-                eq("type", OperatingSystemType.OSX)
-            }
-        }
-
-        println("OSX: " + osxComputers)
-
-        List researchComputerSerials = UserHasComputer.createCriteria().listDistinct {
-            user {
-                eq("department", Department.RESEARCH)
-            }
-            computer {
-                projections {
-                    property("serial")
-                }
-            }
-        }
-
-        println("Research computer serials: " + researchComputerSerials)
-
-        Computer lastInUse = UserHasComputer.createCriteria().get {
-
-            maxResults(1)
-            order("usageStarted", "desc")
-            projections {
-                property("computer")
-            }
-        }
-
-        println("Computer last taken into usage: " + lastInUse.properties)
-
-        List computersInUse = UserHasComputer.createCriteria().list {
-            projections {
-                property("computer")
-            }
-        }
-        List computersNotInUse = Computer.list() - computersInUse
-        println("Computers not in use: " + computersNotInUse)
     }
     def destroy = {
     }

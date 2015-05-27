@@ -17,8 +17,18 @@
 		<g:layoutHead/>
 	</head>
 	<body>
-		<div id="grailsLogo" role="banner"><a href="http://grails.org"><asset:image src="grails_logo.png" alt="Grails"/></a></div>
-		<g:layoutBody/>
+		<header>
+            <h1><g:message code="site.title"/></h1>
+            <g:link uri="/" class="plain-home-link"><g:img src="img" file="icon.png"/></g:link>
+		</header>
+        <sidebar>
+            <ul>
+                <li><g:link uri="/"><g:message code="home"/></g:link></li>
+                <li><g:link controller="user" action="list"><g:message code="user.list"/></g:link></li>
+                <li><g:link controller="computer" action="list"><g:message code="computer.list"/></g:link></li>
+            </ul>
+        </sidebar>
+        <g:layoutBody/>
 		<div class="footer" role="contentinfo"></div>
 		<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
 	</body>

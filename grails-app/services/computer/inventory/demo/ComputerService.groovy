@@ -9,24 +9,41 @@ class ComputerService {
         return Computer.get(id)
     }
 
-    List<Computer> findAllComputers() {
-        return Computer.list()
+    List<Computer> findAllComputers(Map params) {
+        return Computer.list([max: params.max, offset: params.offset])
+    }
+
+    int getComputerCount() {
+        return Computer.count()
+    }
+
+    List<Computer> findAllComputerUsages() {
+        return UserHasComputer.list()
+    }
+
+    private ComputerManufacturer findOrCreateManufacturerByName(String name) {
+        ComputerManufacturer computerManufacturer = ComputerManufacturer.findByName(name)
+        if (!computerManufacturer) {
+            computerManufacturer = new ComputerManufacturer(name: name)
+            computerManufacturer.save()
+        }
+        return computerManufacturer
+    }
+
+    private ComputerModel findByNameOrCreateModel(String name, ComputerManufacturer computerManufacturer) {
+        ComputerModel model = ComputerModel.findByNameAndManufacturer(name, computerManufacturer)
+        if (!model) {
+            model = new ComputerModel(name: name, manufacturer: computerManufacturer)
+            model.save()
+        }
+        return model
     }
 
     @Transactional
     Computer save(Map params) {
-        ComputerManufacturer computerManufacturer = ComputerManufacturer.findByName(params.computerManufacturerName)
-        if (!computerManufacturer) {
-            computerManufacturer = new ComputerManufacturer(name: params.computerManufacturerName)
-            computerManufacturer.save()
-        }
-        ComputerModel model = ComputerModel.findByName(params.computerModelName)
-        if (!model) {
-            model = new ComputerModel(name: params.computerModelName)
-            model.save()
-        }
+        ComputerManufacturer computerManufacturer = findOrCreateManufacturerByName(params.computerManufacturerName)
+        ComputerModel model = findByNameOrCreateModel(params.computerModelName, computerManufacturer)
         OperatingSystem operatingSystem = OperatingSystem.findByTypeAndVersionName(OperatingSystemType.valueOf(params.OperatingSystemType), params.operatingSystemVersionName)
-
         Computer computer = Computer.findBySerial(params.serial)
         if (computer) {
             println("Computer exists already!")

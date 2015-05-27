@@ -17,10 +17,10 @@ class UserService {
         User user = new User(
                 firstName: params.firstName,
                 lastName: params.lastName,
-                SSN: params.ssn,
+                ssn: params.ssn,
                 department: Department.valueOf(params.department)
         )
-        user.save()
+        user.save(flush: true)
         return user
 
     }

@@ -17,9 +17,19 @@ class UserController {
         showUser(user)
     }
 
+    def create() {
+        User user = new User()
+        render(view: "create", model: [user: user])
+    }
+
     def save() {
         User user = userService.save(params)
-        showUser(user)
+        if (user.hasErrors()) {
+            render(view: "create", model: [user: user])
+        } else {
+            flash.message = "user.saved"
+            redirect(action: "list")
+        }
     }
 
     def addComputerToUser() {

@@ -9,12 +9,21 @@ import spock.lang.Specification
 @TestFor(ComputerController)
 class ComputerControllerSpec extends Specification {
 
-    def setup() {
-    }
+    ComputerService computerService = Stub(ComputerService)
 
-    def cleanup() {
-    }
+    void "expect model to have correct object"() {
 
-    void "test something"() {
+        Computer computer = new Computer()
+
+        setup:
+            controller.computerService = computerService
+            computerService.getComputer(_) >> {
+                return computer
+            }
+        when:
+            controller.show()
+        then:
+            model.computer == computer
+
     }
 }

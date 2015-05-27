@@ -9,12 +9,4 @@ import spock.lang.Specification
 @TestFor(ComputerManufacturer)
 class ComputerManufacturerSpec extends Specification {
 
-    def setup() {
-    }
-
-    def cleanup() {
-    }
-
-    void "test something"() {
-    }
 }

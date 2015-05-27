@@ -9,12 +9,5 @@ import spock.lang.Specification
 @TestFor(OperatingSystem)
 class OperatingSystemSpec extends Specification {
 
-    def setup() {
-    }
 
-    def cleanup() {
-    }
-
-    void "test something"() {
-    }
 }

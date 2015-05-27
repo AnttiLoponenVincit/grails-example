@@ -11,3 +11,10 @@
 *= require mobile
 *= require_self
 */
+
+sidebar {
+    position: absolute;
+    left: 0;
+    background: #fff;
+    border: 2px solid green;
+}

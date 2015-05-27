@@ -4,15 +4,17 @@ class User {
 
     String firstName
     String lastName
-    String SSN
+    String ssn
     Department department
 
     static hasMany = [computerUsages: UserHasComputer]
 
+
+
     static constraints = {
         firstName (nullable: false, blank: false)
         lastName (nullable: false, blank: false)
-        SSN (nullable: false, blank: false, unique: true, validator: {val ->
+        ssn (nullable: false, blank: false, unique: true, validator: {val ->
             val ==~ /\d{6}[+-A]\d{3}[A-Z0-9]/
         })
         department (nullable: false)

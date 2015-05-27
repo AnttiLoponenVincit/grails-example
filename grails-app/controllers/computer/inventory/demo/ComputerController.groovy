@@ -3,10 +3,22 @@ package computer.inventory.demo
 class ComputerController {
 
     def computerService
+    def grailsApplication
 
     def list() {
-        List computers = computerService.findAllComputers()
-        render(view: "list", model: [computers: computers])
+        if (!params.max) {
+            params.max = grailsApplication.config.pagination.max
+        }
+        if (!params.offset) {
+            params.offset = grailsApplication.config.pagination.offset
+        }
+
+        List computers = computerService.findAllComputers(params)
+        render(view: "list", model: [computers: computers, computerCount: computerService.getComputerCount()])
+    }
+
+    def create() {
+        render(view: "create")
     }
 
     def show() {

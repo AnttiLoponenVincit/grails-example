@@ -10,12 +10,4 @@ import spock.lang.Specification
 @TestFor(Computer)
 class ComputerSpec extends Specification {
 
-    def setup() {
-    }
-
-    def cleanup() {
-    }
-
-    void "test something"() {
-    }
 }
