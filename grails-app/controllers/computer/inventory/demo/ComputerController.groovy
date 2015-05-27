@@ -6,7 +6,7 @@ class ComputerController {
 
     def list() {
         List computers = computerService.findAllComputers()
-        render computers
+        render(view: "list", model: [computers: computers])
     }
 
     def show() {
